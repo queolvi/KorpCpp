@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+#include <map>
+
+double check_academic_performance(const std::vector<double>& arr) {
+    if (arr.empty()) {
+        return 0.0;
+    }
+
+    std::map<double, int> counts;
+    for (double grade : arr) {
+        counts[grade]++;
+    }
+
+    double total = arr.size();
+    for (const auto& pair : counts) {
+        double grade = pair.first;
+        int count = pair.second;
+        double percentage = (count / total) * 100;
+        std::cout << "Оценка " << grade << ": " << percentage << "%" << std::endl;
+    }
+
+    double successful_grades = 0;
+    for (double grade : arr) {
+        if (grade >= 3) { // Измените условие, если нужно другое определение успеваемости
+            successful_grades++;
+        }
+    }
+    return (successful_grades / total) * 100;
+}
+
+int main() {
+    unsigned int number_of_ratings = 0;
+    std::cout << "Enter number of ratings: ";
+    std::cin >> number_of_ratings;
+
+    std::vector<double> arr(number_of_ratings); // Используем std::vector
+
+    for (unsigned int i = 0; i < number_of_ratings; ++i) {
+        std::cout << "Введите оценку " << i + 1 << ": ";
+        std::cin >> arr[i];
+    }
+
+    double success_rate = check_academic_performance(arr);
+    std::cout << "Процент успеваемости группы: " << success_rate << "%" << std::endl;
+
+    return 0;
+}
+
